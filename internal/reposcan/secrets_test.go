@@ -11,7 +11,8 @@ import (
 // reported as line 0 (which drops the region), and one on line 2 must say 2.
 func TestSecretsScanReportsOneBasedLines(t *testing.T) {
 	dir := t.TempDir()
-	token := "ghp_a1B2c3D4e5F6g7H8i9J0k1L2m3N4o5P6q7R8"
+	// Split so this file does not itself contain a detector-valid token.
+	token := "ghp_" + "a1B2c3D4e5F6g7H8i9J0k1L2m3N4o5P6q7R8"
 	files := map[string]string{
 		"first.env":  "GITHUB_TOKEN=" + token + "\n",
 		"second.env": "ONE=1\nGITHUB_TOKEN=" + token + "\n",
