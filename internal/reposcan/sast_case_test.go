@@ -21,6 +21,7 @@ func TestDetectUnsafeCommandsMixedCaseRules(t *testing.T) {
 		{"nodejs_fs_writefile", `fs.writeFileSync(p, data)`},
 		{"nodejs_serialize_eval", `eval(JSON.parse(s))`},
 		{"nodejs_vm_runincontext", `vm.runInNewContext(code, ctx)`},
+		{"profiles_remove", `profiles -D -all`},
 	}
 	for _, c := range cases {
 		t.Run(c.rule, func(t *testing.T) {
