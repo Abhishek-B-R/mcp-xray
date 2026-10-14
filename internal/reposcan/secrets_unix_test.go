@@ -18,7 +18,9 @@ func TestSecretsScanSkipsNonRegularFiles(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(dir, "h.env"), []byte(secret), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	_ = os.Symlink(filepath.Join(dir, "nope"), filepath.Join(dir, "dead")) // dangling symlink
+	if err := os.Symlink(filepath.Join(dir, "nope"), filepath.Join(dir, "dead")); err != nil {
+		t.Fatalf("create dangling symlink: %v", err)
+	}
 	if err := syscall.Mkfifo(filepath.Join(dir, "pipe"), 0o644); err != nil {
 		t.Skipf("mkfifo unavailable: %v", err) // reading a FIFO would block without the guard
 	}
