@@ -14,7 +14,8 @@ import (
 // FIFO must not hang it, and a real secret next to them is still found.
 func TestSecretsScanSkipsNonRegularFiles(t *testing.T) {
 	dir := t.TempDir()
-	secret := "GITHUB_TOKEN=ghp_a1B2c3D4e5F6g7H8i9J0k1L2m3N4o5P6q7R8\n"
+	// Split so this file does not itself contain a detector-valid token.
+	secret := "GITHUB_TOKEN=ghp_" + "a1B2c3D4e5F6g7H8i9J0k1L2m3N4o5P6q7R8\n"
 	if err := os.WriteFile(filepath.Join(dir, "h.env"), []byte(secret), 0o644); err != nil {
 		t.Fatal(err)
 	}
